@@ -1,2 +1,11 @@
 # Ignore venv
 venv
+
+# Ignore db files
+*.db
+
+# Ignore xml files
+*.xml
+
+# Ignore pycache files
+*.pyc

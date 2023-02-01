@@ -24,9 +24,10 @@ class RepositoryProduct():
 
     def get_all(self):
         products = self.db.query(models.Product).all()
+        return products
 
-    def get():
+    def get(self):
         pass
 
-    def remove():
+    def remove(self):
         pass
