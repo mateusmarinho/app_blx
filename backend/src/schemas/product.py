@@ -4,9 +4,14 @@ from backend.src.schemas.user import User
 
 
 class Product(BaseModel):
-    id: str | None = None
+    id: int | None = None
     name: str
     details: str
     price: float
     is_available: bool = False
-    user: User
+    dimensions: str | None = None
+    user_id: int
+    user: User | None
+
+    class Config:
+        orm_mode = True

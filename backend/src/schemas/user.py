@@ -1,14 +1,13 @@
 from pydantic import BaseModel
 
-from backend.src.schemas.product import Product
-from backend.src.schemas.order import Order
+# from backend.src.schemas.product import Product
 
 
 class User(BaseModel):
-    id: str | None = None
-    name: str
-    phone: str
+    id: int | None = None
+    username: str
     password: str
-    my_products: list[Product]
-    my_sells: list[Order]
-    my_orders: list[Order]
+    phone: str
+
+    class Config:
+        orm_mode = True

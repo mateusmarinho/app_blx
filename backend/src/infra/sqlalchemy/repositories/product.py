@@ -1,3 +1,4 @@
+from sqlalchemy import update
 from sqlalchemy.orm import Session
 
 from backend.src.schemas import schemas
@@ -14,6 +15,8 @@ class RepositoryProduct():
             details=product.details,
             price=product.price,
             is_available=product.is_available,
+            dimensions=product.dimensions,
+            user_id=product.user_id,
         )
 
         self.db.add(db_product)
@@ -26,8 +29,24 @@ class RepositoryProduct():
         products = self.db.query(models.Product).all()
         return products
 
-    def get(self):
-        pass
+    def update_product(self, product: schemas.Product):
+        stmt = (
+            update(models.Product)
+            .where(models.Product.id == product.id)
+            .values(
+                name=product.name,
+                details=product.details,
+                price=product.price,
+                is_available=product.is_available,
+                dimensions=product.dimensions,
+                user_id=product.user_id,
+            )
+        )
+        
+        self.db.execute(stmt)
+        self.db.commit()
+
+        return product
 
     def remove(self):
         pass
