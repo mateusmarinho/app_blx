@@ -10,3 +10,11 @@ class Product(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class CustomProduct(BaseModel):
+    id: str | None = None
+    name: str
+
+    class Config:
+        orm_mode = True
