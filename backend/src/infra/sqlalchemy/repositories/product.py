@@ -1,4 +1,4 @@
-from sqlalchemy import update
+from sqlalchemy import update, delete
 from sqlalchemy.orm import Session
 
 from backend.src.schemas import schemas
@@ -48,5 +48,7 @@ class RepositoryProduct():
 
         return product
 
-    def remove(self):
-        pass
+    def remove(self, product_id: int):
+        stmt = delete(models.Product).where(models.Product.id == product_id)
+        self.db.execute(stmt)
+        self.db.commit()

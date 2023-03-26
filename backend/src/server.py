@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends, status
 from sqlalchemy.orm import Session
 
-from backend.src.schemas.schemas import Product, User
+from backend.src.schemas.schemas import Product, User, SimpleUser
 # from backend.src.schemas.user import User
 # from backend.src.schemas.product import Product
 from backend.src.infra.sqlalchemy.repositories.product import RepositoryProduct
@@ -37,14 +37,20 @@ def update_product(product: Product, db: Session = Depends(get_db)):
     return updated_product
 
 
+@app.delete("/products/{product_id}")
+def remove_product(product_id: int, db: Session = Depends(get_db)):
+    RepositoryProduct(db).remove(product_id)
+    return {"message": "Produto removido!"}
+
+
 # Users routes
-@app.get("/users", response_model=list[User])
+@app.get("/users", response_model=list[SimpleUser])
 def get_all_users(db: Session = Depends(get_db)):
     users = RepositoryUser(db).get_all()
     return users
 
 
-@app.post("/users", status_code=status.HTTP_201_CREATED, response_model=User)
+@app.post("/users", status_code=status.HTTP_201_CREATED, response_model=SimpleUser)
 def create_user(user: User, db: Session = Depends(get_db)):
     new_user = RepositoryUser(db).create(user)
     return new_user
