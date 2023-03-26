@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Depends, status
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
 from backend.src.schemas.schemas import Product, User, SimpleUser
@@ -11,6 +12,19 @@ from backend.src.infra.sqlalchemy.config.database import create_db, get_db
 create_db()
 
 app = FastAPI()
+
+# CORS
+origins = [
+    "http://localhost:8000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/")
